@@ -1,0 +1,12 @@
+﻿@import './core/imports';
+@import './core/variables';
+@import './core/mixins';
+
+
+// components
+@import './components/others/utilities';
+@import './components/others/buttons';
+@import './components/partials/header';
+@import './components/partials/showcase';
+@import './components/partials/collection';
+@import './components/partials/specialOffers';

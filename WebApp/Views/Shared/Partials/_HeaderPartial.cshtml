@@ -1,0 +1,28 @@
+﻿@inject IHttpContextAccessor accessor;
+
+<header>
+    <div class="container">
+        <a id="logotype" asp-controller="Home" asp-action="Index">Fixxo.</a>
+
+        <div id="menu" class="hide">
+            <nav class="menu-links links">
+                <a class="link @(accessor.HttpContext.Request.Path.Value == "/" ? "active" : "")" asp-controller="Home" asp-action="Index">HOME</a>
+                <a class="link @(accessor.HttpContext.Request.Path.Value == "/Product" ? "active" : "")" asp-controller="Product" asp-action="Index">PRODUCTS</a>
+                <a class="link @(accessor.HttpContext.Request.Path.Value == "/Contacts" ? "active" : "")" asp-controller="Contacts" asp-action="Index">CONTACT</a>
+            </nav>
+            <nav class="menu-icons icons">
+                <a class="link" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-search"></i></a>
+                <a class="link" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-code-compare"></i></a>
+                <a class="link" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-heart"></i></a>
+                <a class="link" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-bag-shopping"></i></a>
+                <a class="link ms-5" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-user"></i></a>
+            </nav>
+        </div>
+
+        <div id="toggle-icon" class="toggle icons">
+            <button class="link" data-option="toggle" data-target="#menu"><i class="fa-regular fa-bars"></i></button>
+            <button class="btn-white" data-option="toggle" data-target="#menu"><i class="fa-regular fa-bars"></i></button>
+        </div>
+
+    </div>
+</header>   
