@@ -9,9 +9,6 @@ builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
-
-app.UseExceptionHandler("/Home/Error");
-app.UseHsts();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

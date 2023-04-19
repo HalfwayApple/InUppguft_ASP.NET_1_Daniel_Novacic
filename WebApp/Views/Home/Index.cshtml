@@ -1,2 +1,10 @@
-﻿@{ ViewData["Title"] = "Fixxo. - Home"; }
-<p>Home</p>
+﻿@model WebApp.ViewModels.Home.IndexViewModel
+
+@{
+	ViewData["Title"] = "Fixxo. - Home";
+}
+
+<partial name="~/Views/Shared/Partials/_ShowcasePartial.cshtml" model="Model.ShowcaseModel" />
+<partial name="~/Views/Shared/Partials/_CollectionPartial.cshtml" model="Model.CollectionModel" />
+<partial name="~/Views/Shared/Partials/_SpecialOffersPartial.cshtml" />
+
