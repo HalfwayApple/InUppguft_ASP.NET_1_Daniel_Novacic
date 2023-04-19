@@ -25,7 +25,7 @@ public class AuthenticationController : ControllerBase
 				return Created("", null);
 		}
 
-		return BadRequest();
+		return BadRequest(model);
 	}
 
 
