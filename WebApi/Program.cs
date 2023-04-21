@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.Text;
 using WebApi.Contexts;
 using WebApi.Helpers;
@@ -26,13 +27,19 @@ builder.Services.AddScoped<AddressRepo>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtToken>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ProductService>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(x =>
 {
 	x.User.RequireUniqueEmail = true;
 	x.Password.RequiredLength = 8;
 	x.SignIn.RequireConfirmedAccount = false;
-}).AddEntityFrameworkStores<IdentityContext>();
+})
+	.AddRoles<IdentityRole>()
+	.AddEntityFrameworkStores<IdentityContext>();
+
+
+
 
 builder.Services.AddAuthentication(x =>
 {

@@ -37,6 +37,17 @@ public class AuthService
 			{
 				var identityUser = await _userManager.FindByEmailAsync(model.Email);
 
+				// 2. Sätt roller
+				var role = "Admin";
+				var noRoles = await _userManager.GetUsersInRoleAsync("Admin");
+				if (noRoles.Any())
+				{
+					role = "User";
+				}
+
+				// 2.1. Lägg till roll
+				await _userManager.AddToRoleAsync(identityUser, role);
+
 				// 3. Skapa en Användarprofil
 				UserProfileEntity userProfileEntity = model;
 				userProfileEntity.UserId = identityUser!.Id;

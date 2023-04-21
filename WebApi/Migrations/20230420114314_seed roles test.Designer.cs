@@ -12,8 +12,8 @@ using WebApi.Contexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20230419100842_init")]
-    partial class init
+    [Migration("20230420114314_seed roles test")]
+    partial class seedrolestest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,18 @@ namespace WebApi.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d18c6fd6-33ec-4613-8ded-99d05eb9d1ec",
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = "da0ea8ff-cee2-480f-8834-9d30b21d02e0",
+                            Name = "User"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

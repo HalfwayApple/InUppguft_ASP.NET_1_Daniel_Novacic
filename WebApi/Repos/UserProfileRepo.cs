@@ -4,13 +4,10 @@ using WebApi.Models.Entities.Identity;
 
 namespace WebApi.Repos
 {
-	public class UserProfileRepo : BaseIdentityRepository<UserProfileEntity>
+	public class UserProfileRepo : BaseRepository<UserProfileEntity, IdentityContext>
 	{
-		private readonly IdentityContext _identityContext;
-
 		public UserProfileRepo(IdentityContext identity) : base(identity)
 		{
-			_identityContext = identity;
 		}
 
 		public async Task<bool> AddAddressAsync(UserProfileEntity userProfileEntity, AddressEntity addressEntity)
@@ -19,8 +16,8 @@ namespace WebApi.Repos
 			{
 				userProfileEntity.Addresses.Add(addressEntity);
 
-				_identityContext.Update(userProfileEntity);
-				await _identityContext.SaveChangesAsync();
+				_context.Update(userProfileEntity);
+				await _context.SaveChangesAsync();
 				return true;
 			}
 			catch { return false; }
@@ -28,7 +25,7 @@ namespace WebApi.Repos
 
 		public override async Task<IEnumerable<UserProfileEntity>> GetAllAsync()
 		{
-			return await _identityContext.UserProfiles
+			return await _context.UserProfiles
 				.Include(x => x.User)
 				.Include(x => x.Addresses)
 				.ToListAsync();

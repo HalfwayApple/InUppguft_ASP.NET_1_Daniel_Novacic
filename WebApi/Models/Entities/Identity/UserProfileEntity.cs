@@ -13,6 +13,6 @@ namespace WebApi.Models.Entities.Identity
 
         public IdentityUser User { get; set; } = null!;
 
-        public ICollection<AddressEntity> Addresses { get; set; } = new List<AddressEntity>();
+        public ICollection<AddressEntity> Addresses { get; set; } = new HashSet<AddressEntity>();
     }
 }

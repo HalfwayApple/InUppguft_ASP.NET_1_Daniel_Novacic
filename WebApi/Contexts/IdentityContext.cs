@@ -12,6 +12,32 @@ public class IdentityContext : IdentityDbContext<IdentityUser>
 	}
 
 	public DbSet<UserProfileEntity> UserProfiles { get; set; }
-
 	public DbSet<AddressEntity> Addresses { get; set; }
+
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        var adminRole = new IdentityRole 
+        { 
+            Id = Guid.NewGuid().ToString(),
+            Name = "Admin",
+            NormalizedName = "ADMIN",
+            ConcurrencyStamp = Guid.NewGuid().ToString()
+        };
+        var userRole = new IdentityRole
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "User",
+            NormalizedName = "USER",
+            ConcurrencyStamp = Guid.NewGuid().ToString()
+        };
+
+        builder.Entity<IdentityRole>().HasData
+			(
+				adminRole,
+                userRole
+            );
+    }
 }

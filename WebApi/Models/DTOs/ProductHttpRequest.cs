@@ -8,9 +8,12 @@ public class ProductHttpRequest
 	public string ProductName { get; set; } = null!;
 	public string? Description { get; set; }
 	public decimal Price { get; set; }
-	public string Tag { get; set; } = null!;
 
-	public static implicit operator ProductEntity(ProductHttpRequest req)
+    public ICollection<TagEntity> Tags { get; set; } = new HashSet<TagEntity>();
+
+
+
+    public static implicit operator ProductEntity(ProductHttpRequest req)
 	{
 		return new ProductEntity
 		{
@@ -18,7 +21,7 @@ public class ProductHttpRequest
 			ProductName = req.ProductName,
 			Description = req.Description,
 			Price = req.Price,
-			Tag = req.Tag
+			Tags = req.Tags
 
 		};
 	}

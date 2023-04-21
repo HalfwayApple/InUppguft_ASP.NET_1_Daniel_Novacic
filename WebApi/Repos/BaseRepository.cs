@@ -4,32 +4,32 @@ using WebApi.Contexts;
 
 namespace WebApi.Repos
 {
-	public abstract class BaseIdentityRepository<TEntity> where TEntity : class
-	{
-		private readonly IdentityContext _identity;
+    public abstract class BaseRepository<TEntity, TContext> where TEntity : class where TContext : DbContext
+    {
+        public readonly TContext _context;
 
-		public BaseIdentityRepository(IdentityContext identity)
+        public BaseRepository(TContext context)
+        {
+            _context = context;
+        }
+
+
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
 		{
-			_identity = identity;
-		}
-
-
-		public virtual async Task<TEntity> AddAsync(TEntity entity)
-		{
-			_identity.Set<TEntity>().Add(entity);
-			await _identity.SaveChangesAsync();
+            _context.Set<TEntity>().Add(entity);
+			await _context.SaveChangesAsync();
 
 			return entity;
 		}
 
 		public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
 		{
-			return await _identity.Set<TEntity>().ToListAsync();
+			return await _context.Set<TEntity>().ToListAsync();
 		}
 
 		public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
 		{
-			var entity = await _identity.Set<TEntity>().FirstOrDefaultAsync(predicate);
+			var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
 			if (entity != null)
 				return entity;
 
