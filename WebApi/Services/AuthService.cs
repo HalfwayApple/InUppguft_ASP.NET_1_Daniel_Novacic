@@ -7,6 +7,7 @@ using WebApi.Helpers;
 using WebApi.Models.DTOs;
 using WebApi.Models.Entities;
 using WebApi.Repos;
+using System.Data;
 
 namespace WebApi.Services;
 
@@ -76,15 +77,16 @@ public class AuthService
 			var signInResult = await _signInManager.CheckPasswordSignInAsync(identityUser, model.Password, false);
 			if (signInResult.Succeeded)
 			{
-				var claimsIdentity = new ClaimsIdentity(new Claim[]
+                var roles = await _userManager.GetRolesAsync(identityUser);
+                var claimsIdentity = new ClaimsIdentity(new Claim[]
 				{
 					new Claim("id", identityUser.Id.ToString()),
-					new Claim(ClaimTypes.Name, identityUser.Email!)
-				});
+                    new Claim(ClaimTypes.Name, identityUser.Email!),
+                    new Claim(ClaimTypes.Role, roles[0])
+                });
 
 				return _jwt.Generate(claimsIdentity, DateTime.Now.AddHours(1));
 			}
-
 		}
 
 		return string.Empty;

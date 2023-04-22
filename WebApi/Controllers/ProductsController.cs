@@ -21,4 +21,18 @@ public class ProductsController : ControllerBase
 	{
 		return Ok(await _productService.GetAllAsync());
 	}
+
+    [HttpGet]
+    [Route("Tag/{tagName}")]
+    public async Task<IActionResult> GetByTag(string tagName)
+    {
+        return Ok(await _productService.GetByTagAsync(tagName));
+    }
+
+    [HttpGet]
+    [Route("Id/{id}")]
+    public async Task<IActionResult> GetById(string id)
+    {
+        return Ok(await _productService.GetByTagAsync(id));
+    }
 }

@@ -18,5 +18,10 @@ namespace WebApi.Services
 		{
 			return await _productRepo.GetAllAsync();
 		}
-	}
+
+        public async Task<IEnumerable<ProductEntity>> GetByTagAsync(string tagName)
+        {
+            return await _productRepo.GetByTagAsync(tagName);
+        }
+    }
 }

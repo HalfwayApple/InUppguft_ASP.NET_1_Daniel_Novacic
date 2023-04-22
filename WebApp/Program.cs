@@ -9,10 +9,12 @@ builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
+app.UseHsts();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+app.UseAuthentication();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");

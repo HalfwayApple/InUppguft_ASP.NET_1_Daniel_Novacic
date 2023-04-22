@@ -9,7 +9,7 @@ namespace WebApi.Models.Entities.Data
     public class ProductEntity
     {
         [Key]
-        public string ArticleNumber { get; set; } = null!;
+        public int ArticleNumber { get; set; }
         public string ProductName { get; set; } = null!;
 		public string? Description { get; set; }
 
