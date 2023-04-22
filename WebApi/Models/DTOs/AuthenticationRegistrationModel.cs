@@ -16,9 +16,6 @@ public class AuthenticationRegistrationModel
 	public string Password { get; set; } = null!;
 
 	public string? PhoneNumber { get; set; }
-	public string? StreetName { get; set; }
-	public string? PostalCode { get; set; }
-	public string? City { get; set; }
 
 	// Implicit conversion from AuthenticationRegistrationModel to IdentityUser
 	public static implicit operator IdentityUser(AuthenticationRegistrationModel model)
@@ -38,17 +35,6 @@ public class AuthenticationRegistrationModel
 		{
 			FirstName = model.FirstName,
 			LastName = model.LastName
-		};
-	}
-
-	// Implicit conversion from AuthenticationRegistrationModel to AddressEntity
-	public static implicit operator AddressEntity(AuthenticationRegistrationModel model)
-	{
-		return new AddressEntity
-		{
-			StreetName = model.StreetName!,
-			PostalCode = model.PostalCode!,
-			City = model.City!
 		};
 	}
 }

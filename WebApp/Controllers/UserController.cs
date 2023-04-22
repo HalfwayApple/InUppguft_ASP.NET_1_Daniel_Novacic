@@ -39,6 +39,7 @@ public class UserController : Controller
 		return View();
 	}
 
+	[HttpPost]
 	public async Task<IActionResult> Register(UserRegistrationForm form)
 	{
 		if (ModelState.IsValid)
@@ -49,7 +50,7 @@ public class UserController : Controller
 
 			if (result.IsSuccessStatusCode)
 			{
-				return RedirectToAction("Login", "Login")
+				return RedirectToAction("Login", "Login");
 			}
 
 		}

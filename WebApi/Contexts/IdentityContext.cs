@@ -12,7 +12,6 @@ public class IdentityContext : IdentityDbContext<IdentityUser>
 	}
 
 	public DbSet<UserProfileEntity> UserProfiles { get; set; }
-	public DbSet<AddressEntity> Addresses { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)

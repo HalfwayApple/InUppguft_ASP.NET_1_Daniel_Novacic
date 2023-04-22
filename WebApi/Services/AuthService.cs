@@ -14,15 +14,13 @@ namespace WebApi.Services;
 public class AuthService
 {
 	private readonly UserProfileRepo _userProfileRepository;
-	private readonly AddressRepo _addressRepository;
 	private readonly UserManager<IdentityUser> _userManager;
 	private readonly SignInManager<IdentityUser> _signInManager;
 	private readonly JwtToken _jwt;
 
-	public AuthService(UserProfileRepo userProfileRepository, AddressRepo addressRepository, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, JwtToken jwt)
+	public AuthService(UserProfileRepo userProfileRepository, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, JwtToken jwt)
 	{
 		_userProfileRepository = userProfileRepository;
-		_addressRepository = addressRepository;
 		_userManager = userManager;
 		_signInManager = signInManager;
 		_jwt = jwt;
@@ -53,12 +51,6 @@ public class AuthService
 				UserProfileEntity userProfileEntity = model;
 				userProfileEntity.UserId = identityUser!.Id;
 				await _userProfileRepository.AddAsync(userProfileEntity);
-
-				// 4. Skapa en adress om den inte finns
-				var addressEntity = await _addressRepository.GetOrCreateAsync(model);
-
-				// 5. Lägg till adressassociationen
-				await _userProfileRepository.AddAddressAsync(userProfileEntity, addressEntity);
 
 				return true;
 			}

@@ -12,6 +12,4 @@ public class UserProfileEntity
     public string LastName { get; set; } = null!;
 
     public IdentityUser User { get; set; } = null!;
-
-    public ICollection<AddressEntity> Addresses { get; set; } = new HashSet<AddressEntity>();
 }

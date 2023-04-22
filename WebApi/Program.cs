@@ -23,7 +23,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<IdentityContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("IdentityDB")));
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DataDB")));
 builder.Services.AddScoped<UserProfileRepo>();
-builder.Services.AddScoped<AddressRepo>();
 builder.Services.AddScoped<ProductRepo>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtToken>();
