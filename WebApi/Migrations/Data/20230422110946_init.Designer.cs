@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Contexts;
 
@@ -10,9 +11,11 @@ using WebApi.Contexts;
 namespace WebApi.Migrations.Data
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230422110946_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +24,19 @@ namespace WebApi.Migrations.Data
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebApi.Models.Entities.Data.ContactEntity", b =>
+            modelBuilder.Entity("ProductEntityTagEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductsArticleNumber")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("ProductsArticleNumber", "TagsId");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("TagsId");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contacts");
+                    b.ToTable("ProductEntityTagEntity");
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.Data.ProductEntity", b =>
@@ -70,12 +63,7 @@ namespace WebApi.Migrations.Data
                     b.Property<int>("StarRating")
                         .HasColumnType("int");
 
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
                     b.HasKey("ArticleNumber");
-
-                    b.HasIndex("TagId");
 
                     b.ToTable("Products");
                 });
@@ -114,20 +102,19 @@ namespace WebApi.Migrations.Data
                         });
                 });
 
-            modelBuilder.Entity("WebApi.Models.Entities.Data.ProductEntity", b =>
+            modelBuilder.Entity("ProductEntityTagEntity", b =>
                 {
-                    b.HasOne("WebApi.Models.Entities.Data.TagEntity", "Tag")
-                        .WithMany("Products")
-                        .HasForeignKey("TagId")
+                    b.HasOne("WebApi.Models.Entities.Data.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsArticleNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.Data.TagEntity", b =>
-                {
-                    b.Navigation("Products");
+                    b.HasOne("WebApi.Models.Entities.Data.TagEntity", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

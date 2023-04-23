@@ -15,9 +15,11 @@ namespace WebApi.Models.Entities.Data
 
 		[Column(TypeName = "money")]
         public decimal Price { get; set; }
+		public int StarRating { get; set; }
+		public string? ImageURL { get; set; }
 
 
-        public ICollection<TagEntity> Tags { get; set; } = new HashSet<TagEntity>();
+		public TagEntity Tag { get; set; } = null!;
 
 
 
@@ -29,7 +31,7 @@ namespace WebApi.Models.Entities.Data
 				ProductName = entity.ProductName,
 				Description = entity.Description,
 				Price = entity.Price,
-				Tags = entity.Tags
+				Tag = entity.Tag
 			};
 		}
 	}

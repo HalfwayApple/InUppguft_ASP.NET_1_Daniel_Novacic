@@ -24,10 +24,14 @@ builder.Services.AddDbContext<IdentityContext>(x => x.UseSqlServer(builder.Confi
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DataDB")));
 builder.Services.AddScoped<UserProfileRepo>();
 builder.Services.AddScoped<ProductRepo>();
+builder.Services.AddScoped<ContactRepo>();
+builder.Services.AddScoped<TagRepo>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtToken>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ContactService>();
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(x =>
 {

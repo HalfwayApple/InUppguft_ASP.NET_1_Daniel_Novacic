@@ -8,8 +8,10 @@ namespace WebApi.Models.DTOs
 		public string ProductName { get; set; } = null!;
 		public string? Description { get; set; }
 		public decimal Price { get; set; }
+		public string ImageUrl { get; set; }
+		public int StarRating { get; set; }
 
-        public ICollection<TagEntity> Tags { get; set; } = new HashSet<TagEntity>();
+		public TagEntity Tag { get; set; } = null!;
 
     }
 }

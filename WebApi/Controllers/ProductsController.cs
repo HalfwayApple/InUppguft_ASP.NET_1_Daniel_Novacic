@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters;
+using WebApi.Models.DTOs;
 using WebApi.Services;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
-[UseApiKey]
+//[UseApiKey]
 [ApiController]
 public class ProductsController : ControllerBase
 {
@@ -31,8 +32,23 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [Route("Id/{id}")]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById(int id)
     {
-        return Ok(await _productService.GetByTagAsync(id));
+        return Ok(await _productService.GetByIdAsync(id));
     }
+
+	[HttpPost]
+	[Route("Create")]
+	public async Task<IActionResult> CreateProduct(ProductHttpRequest model)
+	{
+		if (ModelState.IsValid)
+		{
+			if (await _productService.AddAsync(model) != null)
+            {
+				return Created("", null);
+			}
+		}
+
+		return BadRequest(model);
+	}
 }

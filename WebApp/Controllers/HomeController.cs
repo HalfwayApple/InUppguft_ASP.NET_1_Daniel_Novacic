@@ -6,40 +6,40 @@ namespace WebApp.Controllers
 {
 	public class HomeController : Controller
 	{
-		public IActionResult Index()
+		public async Task<IActionResult> IndexAsync()
 		{
+			using var http = new HttpClient();
+
+			var featuredItems = await http.GetFromJsonAsync<IEnumerable<CollectionItemModel>>("https://localhost:7230/api/Products/Tag/Featured?key=755d128a-d2ae-43f9-a521-41712709f1b5");
+			var newItems = await http.GetFromJsonAsync<IEnumerable<CollectionItemModel>>("https://localhost:7230/api/Products/Tag/New?key=755d128a-d2ae-43f9-a521-41712709f1b5");
+			var popularItems = await http.GetFromJsonAsync<IEnumerable<CollectionItemModel>>("https://localhost:7230/api/Products/Tag/Popular?key=755d128a-d2ae-43f9-a521-41712709f1b5");
+
+
 			var viewModel = new IndexViewModel()
 			{
 				ShowcaseModel = new ShowcaseModel
 				{
-					Title = "Exclusive Chair gold Collection.",
-					Ingress = "WELCOME TO BMERKETO SHOP",
+					Title = "DONT MISS THIS OPPORTUNITY",
+					Ingress = "GET UP TO 40% OFF",
 					ButtonText = "SHOP NOW",
 					ImageUrl = "images/showcase-img.png"
 				},
-				CollectionModel = new CollectionModel
+				FeaturedModel = new CollectionModel
 				{
-					Title = "Best Collection",
-					Categories = new List<string>
-					{
-						"All", "Bag", "Dress", "Decoration", "Essentials", "Interior", "Laptop", "Mobile", "Beauty"
-					},
-					CollectionItems = new List<CollectionItemModel>
-					{
-						new CollectionItemModel { Id = "1", Title = "Apple watch", Price = 649.00m, ImageUrl = "images/placeholders/270x295.svg", StarRating = 4 },
-						new CollectionItemModel { Id = "2", Title = "Samsung phone", Price = 699.00m, ImageUrl = "images/placeholders/270x295.svg", StarRating = 5 },
-						new CollectionItemModel { Id = "3", Title = "Dell PC", Price = 299.00m, ImageUrl = "images/placeholders/270x295.svg", StarRating = 3 },
-						new CollectionItemModel { Id = "4", Title = "Dyson vacuumcleaner", Price = 199.00m, ImageUrl = "images/placeholders/270x295.svg", StarRating = 5 },
-						new CollectionItemModel { Id = "5", Title = "Apple watch collection", Price = 30.00m, ImageUrl = "images/placeholders/270x295.svg" },
-						new CollectionItemModel { Id = "6", Title = "Apple watch collection", Price = 30.00m, ImageUrl = "images/placeholders/270x295.svg" },
-						new CollectionItemModel { Id = "7", Title = "Apple watch collection", Price = 30.00m, ImageUrl = "images/placeholders/270x295.svg" },
-						new CollectionItemModel { Id = "8", Title = "Apple watch collection", Price = 30.00m, ImageUrl = "images/placeholders/270x295.svg" },
-					}
+					Title = "Featured",
+					CollectionItems = featuredItems.Take(2)
 				},
-				SpecialOffersModel = new SpecialOffersModel
-				{
-
-				}
+                NewModel = new CollectionModel
+                {
+                    Title = "New",
+                    CollectionItems = newItems.Take(2)
+                },
+                PopularModel = new CollectionModel
+                {
+                    Title = "Popular",
+                    CollectionItems = popularItems.Take(2)
+                },
+				SpecialOffersModel = new SpecialOffersModel()
 			};
 
 			return View(viewModel);

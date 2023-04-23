@@ -4,12 +4,12 @@ namespace WebApi.Models.DTOs;
 
 public class ProductHttpRequest
 {
-	public int ArticleNumber { get; set; }
 	public string ProductName { get; set; } = null!;
 	public string? Description { get; set; }
 	public decimal Price { get; set; }
-
-    public ICollection<TagEntity> Tags { get; set; } = new HashSet<TagEntity>();
+	public string ImageUrl { get; set; }
+	public int StarRating { get; set; }
+	public string Tag { get; set; } = null!;
 
 
 
@@ -17,12 +17,11 @@ public class ProductHttpRequest
 	{
 		return new ProductEntity
 		{
-			ArticleNumber = req.ArticleNumber,
 			ProductName = req.ProductName,
 			Description = req.Description,
 			Price = req.Price,
-			Tags = req.Tags
-
+			ImageURL = req.ImageUrl,
+			StarRating = req.StarRating
 		};
 	}
 }

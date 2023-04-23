@@ -1,0 +1,23 @@
+﻿@model WebApp.Models.CollectionItemModel
+
+<div class="product-details">
+	<div class="item">
+		<div class="image-section">
+			@if (Model.ImageUrl == null)
+			{
+				<div class="image-placeholder"></div>
+			}
+			else
+			{
+				<img src="@Model.ImageUrl" alt="Image not found" />
+			}
+		</div>
+		<div class="body-section">
+			<div class="name">@Model?.ProductName</div>
+			<partial name="~/Views/Shared/Partials/_StarRatingPartial.cshtml" model="@Model?.StarRating" />
+			<p class="fw-medium mt-5 mb-5">@Model?.Description</p>
+			<div class="price">$@Model?.Price</div>
+			<button class="btn-theme">Köp</button>
+		</div>
+	</div>
+</div>

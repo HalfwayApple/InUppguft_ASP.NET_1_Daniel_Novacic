@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WebApi.Migrations.Data
 {
     /// <inheritdoc />
@@ -14,11 +16,13 @@ namespace WebApi.Migrations.Data
                 name: "Products",
                 columns: table => new
                 {
-                    ArticleNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ArticleNumber = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "money", nullable: false),
-                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    StarRating = table.Column<int>(type: "int", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,7 +46,7 @@ namespace WebApi.Migrations.Data
                 name: "ProductEntityTagEntity",
                 columns: table => new
                 {
-                    ProductsArticleNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProductsArticleNumber = table.Column<int>(type: "int", nullable: false),
                     TagsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -60,6 +64,16 @@ namespace WebApi.Migrations.Data
                         principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tags",
+                columns: new[] { "Id", "TagName" },
+                values: new object[,]
+                {
+                    { 1, "Featured" },
+                    { 2, "Popular" },
+                    { 3, "New" }
                 });
 
             migrationBuilder.CreateIndex(

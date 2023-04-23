@@ -12,19 +12,25 @@ public class ProductRepo : BaseRepository<ProductEntity, DataContext>
 
     public override async Task<IEnumerable<ProductEntity>> GetAllAsync()
     {
-        return await _context.Products.Include(x => x.Tags).ToListAsync();
+        return await _context.Products.Include(x => x.Tag).ToListAsync();
     }
 
     public async Task<IEnumerable<ProductEntity>> GetByTagAsync(string tagName)
     {
         return await _context.Products
-            .Where(x => x.Tags.Any(t => t.TagName == tagName))
-            .Include(x => x.Tags)
+            .Where(x => x.Tag.TagName == tagName)
+            .Include(x => x.Tag)
             .ToListAsync();
     }
 
-    public async Task<ProductEntity> GetById(int id)
+    public async Task<ProductEntity> GetByIdAsync1(int id)
     {
         return await base.GetAsync(x => x.ArticleNumber == id);
     }
+
+	public async Task<ProductEntity> GetByIdAsync(int id)
+	{
+        var result = await _context.Products.FirstOrDefaultAsync(x => x.ArticleNumber == id);
+        return result;
+	}
 }

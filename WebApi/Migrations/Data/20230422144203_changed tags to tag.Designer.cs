@@ -11,8 +11,8 @@ using WebApi.Contexts;
 namespace WebApi.Migrations.Data
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230420110535_init")]
-    partial class init
+    [Migration("20230422144203_changed tags to tag")]
+    partial class changedtagstotag
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,27 +24,18 @@ namespace WebApi.Migrations.Data
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProductEntityTagEntity", b =>
-                {
-                    b.Property<string>("ProductsArticleNumber")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TagsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsArticleNumber", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("ProductEntityTagEntity");
-                });
-
             modelBuilder.Entity("WebApi.Models.Entities.Data.ProductEntity", b =>
                 {
-                    b.Property<string>("ArticleNumber")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ArticleNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleNumber"));
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
@@ -54,11 +45,15 @@ namespace WebApi.Migrations.Data
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Tag")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StarRating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
 
                     b.HasKey("ArticleNumber");
+
+                    b.HasIndex("TagId");
 
                     b.ToTable("Products");
                 });
@@ -78,21 +73,39 @@ namespace WebApi.Migrations.Data
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            TagName = "Featured"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            TagName = "Popular"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            TagName = "New"
+                        });
                 });
 
-            modelBuilder.Entity("ProductEntityTagEntity", b =>
+            modelBuilder.Entity("WebApi.Models.Entities.Data.ProductEntity", b =>
                 {
-                    b.HasOne("WebApi.Models.Entities.Data.ProductEntity", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsArticleNumber")
+                    b.HasOne("WebApi.Models.Entities.Data.TagEntity", "Tag")
+                        .WithMany("Products")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Models.Entities.Data.TagEntity", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.Data.TagEntity", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,7 +2,7 @@
 
 <div class="item">
 	<div class="image-section">
-		<img src="@Model.ImageUrl" alt="@Model.Title">
+		<img src="@Model.ImageUrl" alt="@Model.ProductName">
 		<div class="menu">
 			<div class="icons">
 				<button class="link">
@@ -15,13 +15,13 @@
 					<i class="fa-regular fa-bag-shopping"></i>
 				</button>
 			</div>
-			<a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@Model.Id" class="btn-theme">QUICK VIEW</a>
+			<a asp-action="Details" asp-controller="Product" asp-route-articleNumber="@Model.ArticleNumber" class="btn-theme">QUICK VIEW</a>
 		</div>
 	</div>
     
 	<div class="body-section">
 		<div class="body-section">
-			<div class="title">@Model.Title</div>
+			<div class="title">@Model.ProductName</div>
 			<partial name="~/Views/Shared/Partials/_StarRatingPartial.cshtml" model="@Model?.StarRating" />
 			<div class="price">$@Model.Price</div>
 		</div>

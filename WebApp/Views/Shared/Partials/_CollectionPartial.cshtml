@@ -4,13 +4,6 @@
     <div class="container">
         <h1 class="title">@Model.Title</h1>
 
-        <ul class="categories">
-            @foreach (var category in Model.Categories)
-            {
-                <li class="category-item">@category</li>
-            }
-        </ul>
-
         <div class="item-collection">
 
             @foreach (var item in Model.CollectionItems)
@@ -19,7 +12,7 @@
             }
 
         </div>
-        <div class="load-more">
+        <div class="load-more d-flex justify-content-center">
             <button class="btn-white">LOAD MORE <i class="fa-solid fa-rotate-right"></i></button>
         </div>
     </div>

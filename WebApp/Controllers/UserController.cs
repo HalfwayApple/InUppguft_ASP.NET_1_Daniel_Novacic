@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using WebApp.Models.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace WebApp.Controllers;
 
@@ -57,8 +60,30 @@ public class UserController : Controller
 		return View(form);
 	}
 
+	[Authorize(Roles = "Admin")]
 	public IActionResult Admin()
-    {
+	{
         return View();
     }
+
+	[Authorize(Roles = "Admin")]
+	[HttpPost]
+	public async Task<IActionResult> Admin(AdminAddProductForm form)
+	{
+		if (ModelState.IsValid)
+		{
+			using var http = new HttpClient();
+
+			var result = await http.PostAsJsonAsync("https://localhost:7230/api/Products/Create?key=755d128a-d2ae-43f9-a521-41712709f1b5", form);
+
+			if (result.IsSuccessStatusCode)
+			{
+				return Created("", null);
+			}
+
+			return View();
+		}
+
+		return View(form);
+	}
 }
