@@ -60,13 +60,11 @@ public class UserController : Controller
 		return View(form);
 	}
 
-	[Authorize(Roles = "Admin")]
 	public IActionResult Admin()
 	{
         return View();
     }
 
-	[Authorize(Roles = "Admin")]
 	[HttpPost]
 	public async Task<IActionResult> Admin(AdminAddProductForm form)
 	{
@@ -81,7 +79,7 @@ public class UserController : Controller
 				return Created("", null);
 			}
 
-			return View();
+			return RedirectToAction("Index", "Home");
 		}
 
 		return View(form);

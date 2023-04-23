@@ -6,7 +6,7 @@ using WebApi.Services;
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
-//[UseApiKey]
+[UseApiKey]
 [ApiController]
 public class ProductsController : ControllerBase
 {

@@ -15,7 +15,14 @@
                 <a class="link" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-code-compare"></i></a>
                 <a class="link" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-heart"></i></a>
                 <a class="link" asp-controller="Products" asp-action="Search"><i class="fa-regular fa-bag-shopping"></i></a>
-                <a class="link ms-5" asp-controller="Login" asp-action="Index"><i class="fa-regular fa-user"></i></a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="link ms-5" asp-controller="User" asp-action="MyPage"><i class="fa-regular fa-user"></i></a>
+                }
+                else
+                {
+                    <a class="link ms-5" asp-controller="Login" asp-action="Index"><i class="fa-regular fa-user"></i></a>
+                }
             </nav>
         </div>
 

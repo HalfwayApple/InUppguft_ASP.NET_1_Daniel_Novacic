@@ -24,7 +24,7 @@ public class ContactsController : Controller
 				return Created("", null);
 			}
 
-			return View();
+			return RedirectToAction("Index", "Home");
 		}
 
 		return View(form);

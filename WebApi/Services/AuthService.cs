@@ -69,6 +69,8 @@ public class AuthService
 			var signInResult = await _signInManager.CheckPasswordSignInAsync(identityUser, model.Password, false);
 			if (signInResult.Succeeded)
 			{
+				await _signInManager.SignInAsync(identityUser, false);
+
                 var roles = await _userManager.GetRolesAsync(identityUser);
                 var claimsIdentity = new ClaimsIdentity(new Claim[]
 				{
