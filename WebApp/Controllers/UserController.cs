@@ -27,7 +27,7 @@ public class UserController : Controller
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
 			var readableToken = handler.ReadJwtToken(token);
 			var roles = readableToken.Claims.Where(x => x.Type == "role").Select(x => x.Value).ToList();
-            if (roles.Contains("Admin"))
+            if (roles.Contains("Admin") || roles.Contains("User"))
 			{
                 return RedirectToAction("Admin", "User");
             }
@@ -76,11 +76,10 @@ public class UserController : Controller
 
 			if (result.IsSuccessStatusCode)
 			{
-				return Created("", null);
-			}
+                return RedirectToAction("Index", "Home");
+            }
 
-			return RedirectToAction("Index", "Home");
-		}
+        }
 
 		return View(form);
 	}

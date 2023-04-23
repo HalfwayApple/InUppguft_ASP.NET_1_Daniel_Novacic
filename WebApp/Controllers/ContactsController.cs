@@ -21,11 +21,9 @@ public class ContactsController : Controller
 
 			if (result.IsSuccessStatusCode)
 			{
-				return Created("", null);
-			}
-
-			return RedirectToAction("Index", "Home");
-		}
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
 		return View(form);
 	}
